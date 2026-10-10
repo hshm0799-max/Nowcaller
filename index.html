@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NowCaller - Telecaller Tracker</title>
+<meta name="description" content="NowCaller telecaller call tracking CRM">
+<meta name="robots" content="index,follow">
+<style>
+body{font-family:Arial;background:#0f172a;color:#e2e8f0;margin:0;padding:15px}h1{color:#38bdf8}.card{background:#1e293b;padding:15px;border-radius:12px;margin:12px 0}input,button{box-sizing:border-box;width:100%;padding:11px;margin:5px 0;border-radius:8px;border:1px solid #334155}button{background:#0ea5e9;color:#fff;border:0;font-weight:bold}.hidden{display:none}table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:8px;border-bottom:1px solid #334155;text-align:left}.msg{padding:10px;border-radius:7px;background:#ef4444;display:none}.ok{background:#22c55e}
+</style></head><body>
+<h1>NowCaller</h1><div id="msg" class="msg"></div>
+<div id="login" class="card"><h2>Admin Login</h2><input id="id" placeholder="Admin ID" value="admin"><input id="pass" type="password" placeholder="Password" value="admin123"><button onclick="log()">Login</button><small>Demo login: admin / admin123</small></div>
+<div id="app" class="hidden"><div class="card"><button onclick="out()">Logout</button><h2>Telecaller Add Karein</h2><input id="name" placeholder="Staff Name"><input id="staffid" placeholder="Staff ID"><button onclick="addStaff()">Add Staff</button></div>
+<div class="card"><h2>Customer Number Assign Karein</h2><input id="number" placeholder="Customer Mobile Number"><input id="assign" placeholder="Staff ID"><button onclick="addLead()">Add Number</button></div>
+<div class="card"><h2>Admin Report</h2><table><thead><tr><th>Staff</th><th>Number</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></div></div>
+<script>
+let data=JSON.parse(localStorage.getItem('nowcaller')||'{"staff":[],"leads":[]}');
+function save(){localStorage.setItem('nowcaller',JSON.stringify(data));render()}
+function show(m,ok){let x=document.getElementById('msg');x.textContent=m;x.className='msg '+(ok?'ok':'');x.style.display='block';setTimeout(()=>x.style.display='none',2500)}
+function log(){if(id.value==='admin'&&pass.value==='admin123'){login.classList.add('hidden');app.classList.remove('hidden');render();show('Login successful',true)}else show('Wrong ID or password')}
+function out(){location.reload()}
+function addStaff(){if(!name.value||!staffid.value)return show('Name aur Staff ID bharein');data.staff.push({name:name.value,id:staffid.value});name.value=staffid.value='';save();show('Staff added',true)}
+function addLead(){if(!number.value||!assign.value)return show('Number aur Staff ID bharein');data.leads.push({number:number.value,staff:assign.value,status:'Not Called'});number.value=assign.value='';save();show('Number assigned',true)}
+function render(){rows.innerHTML='';data.leads.forEach(x=>rows.innerHTML+=`<tr><td>${x.staff}</td><td>${x.number}</td><td>${x.status}</td></tr>`)}
+</script></body></html>
