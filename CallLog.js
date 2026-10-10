@@ -1,0 +1,1 @@
+const mongoose=require('mongoose');module.exports=mongoose.model('CallLog',new mongoose.Schema({telecallerId:String,number:String,status:String,answered:String,duration:String,remark:String,callTime:String},{timestamps:true}));

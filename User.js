@@ -1,0 +1,1 @@
+const mongoose=require('mongoose');module.exports=mongoose.model('User',new mongoose.Schema({name:String,staffId:{type:String,unique:true,required:true},password:String,role:{type:String,enum:['admin','telecaller'],default:'telecaller'},active:{type:Boolean,default:true}},{timestamps:true}));

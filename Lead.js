@@ -1,0 +1,1 @@
+const mongoose=require('mongoose');module.exports=mongoose.model('Lead',new mongoose.Schema({number:{type:String,unique:true,required:true},assignedTo:String,status:{type:String,enum:['Not Called','Called'],default:'Not Called'},answered:{type:String,enum:['','Yes','No'],default:''},duration:String,remark:String,callTime:String},{timestamps:true}));
